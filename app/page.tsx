@@ -429,6 +429,7 @@ export default function Component() {
                 alt={translate(selectedProject.title.en, selectedProject.title.zh)}
                 width={600}
                 height={400}
+                unoptimized={true}
                 className="w-full h-64 object-cover rounded-t-lg"
               />
               <button
