@@ -118,13 +118,13 @@ export default function Component() {
 
   const translate = (en: string, zh: string) => isEnglish ? en : zh
 
-  const handleContactHover = (contact) => {
-    setHoveredContact(contact);
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      setHoveredContact(null);
-    }, 5000);
-  }
+  // const handleContactHover = (contact) => {
+  //   setHoveredContact(contact);
+  //   if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  //   timeoutRef.current = setTimeout(() => {
+  //     setHoveredContact(null);
+  //   }, 5000);
+  // }
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
@@ -252,7 +252,7 @@ export default function Component() {
                       <li
                         key={contact.name}
                         className="group relative"
-                        onMouseEnter={() => handleContactHover(contact)}
+                        // onMouseEnter={() => handleContactHover(contact)}
                         onMouseLeave={() => setHoveredContact(null)}
                       >
                         <a
@@ -277,12 +277,12 @@ export default function Component() {
                         {hoveredContact === contact && (
                           <div className="absolute left-0 mt-2 p-2 bg-white dark:bg-gray-800 rounded shadow-lg z-10 flex items-center space-x-2">
                             <a
-                              href={contact.url}
+                              // href={contact.url}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
                             >
-                              {contact.url}
+                              {/* {contact.url} */}
                             </a>
                           </div>
                         )}
