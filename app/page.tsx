@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useRef } from 'react'
-import { Github, MessageCircle, BookOpen, Mail, Moon, Sun, Languages, Copy, Search, ChevronDown, X, ChevronLeft } from 'lucide-react'
+import { Github, MessageCircle, BookOpen, Mail, Moon, Sun, Languages, Copy, Search, ChevronDown, X, ChevronLeft, Check } from 'lucide-react'
 import { InlineMath, BlockMath } from 'react-katex'
 import 'katex/dist/katex.min.css'
 
@@ -25,6 +25,12 @@ interface Project {
   title: { en: string; zh: string }
   description: { en: string; zh: string }
   image: string
+}
+
+interface ContactInfo {
+  name: string
+  url: string
+  display: string
 }
 
 const blogPosts: BlogPost[] = [
@@ -71,7 +77,7 @@ const projects: Project[] = [
       en: 'Efficient Infrared Radiation Rapid Calculation Model: This project involves the development of a sophisticated model for calculating infrared radiation. It includes temperature field calculations and radiation calculations, utilizing advanced techniques such as 3D modeling, six-degree-of-freedom trajectory modeling, spatial external heat flow calculations, and transient temperature field calculations. The radiation calculation part involves surface temperature distribution, perspective imaging models, and radiation imaging, incorporating complex concepts like BRDF (Bidirectional Reflectance Distribution Function).',
       zh: '有效红外辐射快速计算模型：该项目涉及开发一个复杂的红外辐射计算模型。它包括温度场计算和辐射计算，利用了先进的技术，如3D建模、六自由度轨迹建模、空间外热流计算和瞬态温度场计算。辐射计算部分涉及表面温度分布、透视成像模型和辐射成像，并包含了BRDF（双向反射分布函数）等复杂概念。'
     },
-    image: '/placeholder.svg?height=400&width=600'
+    image: '/opengl.gif?height=400&width=600'
   },
   {
     id: 2,
@@ -80,7 +86,7 @@ const projects: Project[] = [
       en: 'Introduction to this website and how to deploy it',
       zh: '关于此网站的介绍，以及如何部署'
     },
-    image: '/placeholder.svg?height=400&width=600'
+    image: '/opengl.gif?height=400&width=600'
   },
   {
     id: 3,
@@ -89,7 +95,7 @@ const projects: Project[] = [
       en: '7 creational patterns out of 24 design patterns (Part 1)',
       zh: '24个设计模式的7个创建型（一）'
     },
-    image: '/placeholder.svg?height=400&width=600'
+    image: '/opengl.gif?height=400&width=600'
   },
 ]
 
@@ -100,7 +106,8 @@ export default function Component() {
   const [isEnglish, setIsEnglish] = useState(true)
   const [currentPage, setCurrentPage] = useState('home')
   const [hoveredContact, setHoveredContact] = useState(null)
-  const timeoutRef = useRef(null)
+  const [copiedContact, setCopiedContact] = useState<string | null>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedTag, setSelectedTag] = useState("ALL")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
@@ -113,19 +120,21 @@ export default function Component() {
   const translate = (en: string, zh: string) => isEnglish ? en : zh
 
   const handleContactHover = (contact) => {
-    clearTimeout(timeoutRef.current);
     setHoveredContact(contact);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
       setHoveredContact(null);
     }, 5000);
   }
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
-    alert('Copied to clipboard!')
+    setCopiedContact(text)
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => setCopiedContact(null), 2000)
   }
 
-  const contactInfo = [
+  const contactInfo: ContactInfo[] = [
     { name: 'Email', url: 'mailto:1062998292@qq.com', display: '1062998292@qq.com' },
     { name: 'GitHub', url: 'https://github.com', display: 'github.com' },
     { name: 'ResearchGate', url: 'https://www.researchgate.net/profile/Qianwen-Wang-15', display: 'ResearchGate.com' },
@@ -147,7 +156,7 @@ export default function Component() {
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
       <header className={`sticky top-0 z-10 flex items-center justify-between p-4 ${darkMode ? 'border-gray-700 bg-gray-900/80' : 'border-gray-200 bg-white/80'} border-b transition-colors duration-300 backdrop-blur-sm`}>
-        <Image src="/placeholder.svg" alt="Logo" width={40} height={40} className="rounded-lg" />
+        <Image src="/seu.svg" alt="Logo" width={40} height={40} className="rounded-lg" />
         <nav className="hidden md:flex space-x-4">
           {[
             { en: 'Home', zh: '首页', page: 'home' },
@@ -208,7 +217,7 @@ export default function Component() {
                   </div>
                 </div>
                 <Image
-                  src="/placeholder.svg"
+                  src="/seu.svg"
                   alt={translate('Profile', '个人头像')}
                   width={200}
                   height={200}
@@ -228,11 +237,11 @@ export default function Component() {
                   </p>
                   <h3 className="text-xl font-bold mb-2">{translate('What I do', '我做什么')}</h3>
                   <p className="mb-4">
-                    {translate("I'm currently a PhD student.", "我目前是一名博士研究生。")}
+                    {translate("I'm currently a PhD  student.", "我目前是一名博士研究生。")}
                   </p>
                   <h3 className="text-xl font-bold mb-2">{translate('Skill Set', '技能集')}</h3>
                   <ul className="list-disc list-inside mb-4">
-                    <li>{translate('Language: C++, C,   Python, Matlab', '语言：C++、C、Python、Matlab')}</li>
+                    <li>{translate('Language: C++, C, Python, Matlab', '语言：C++、C、Python、Matlab')}</li>
                     <li>{translate('DL Framework: Pytorch, tensorflow', '框架：Pytorch、Tensorflow')}</li>
                     <li>{translate('Lib: OpenCV, OpenGL, CUDA', '库  ：OpenCV、OpenGL、CUDA')}</li>
                     <li>{translate('Software: Fluent, Modtran, Solidworks, Keil', '软件：Fluent、Modtran、Solidworks、Keil')}</li>
@@ -243,17 +252,29 @@ export default function Component() {
                     {contactInfo.map((contact) => (
                       <li
                         key={contact.name}
-                        className="relative"
+                        className="group relative"
                         onMouseEnter={() => handleContactHover(contact)}
+                        onMouseLeave={() => setHoveredContact(null)}
                       >
                         <a
                           href={contact.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-violet-600 hover:text-violet-800 transition-colors duration-300"
+                          className="text-violet-600 hover:text-violet-800 transition-colors duration-300 group-hover:text-lg"
                         >
                           {contact.display}
                         </a>
+                        <button
+                          onClick={() => copyToClipboard(contact.url)}
+                          className="ml-2 p-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 opacity-0 group-hover:opacity-100"
+                          aria-label={`Copy ${contact.name} contact information`}
+                        >
+                          {copiedContact === contact.url ? (
+                            <Check className="w-4 h-4 text-green-500" />
+                          ) : (
+                            <Copy className="w-4 h-4" />
+                          )}
+                        </button>
                         {hoveredContact === contact && (
                           <div className="absolute left-0 mt-2 p-2 bg-white dark:bg-gray-800 rounded shadow-lg z-10 flex items-center space-x-2">
                             <a
@@ -264,12 +285,6 @@ export default function Component() {
                             >
                               {contact.url}
                             </a>
-                            <button
-                              onClick={() => copyToClipboard(contact.url)}
-                              className="p-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300"
-                            >
-                              <Copy className="w-4 h-4" />
-                            </button>
                           </div>
                         )}
                       </li>
