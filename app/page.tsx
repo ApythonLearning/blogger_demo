@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useState, useRef } from 'react'
 import { Github, MessageCircle, BookOpen, Mail, Moon, Sun, Languages, Copy, Search, ChevronDown, X, ChevronLeft, Check } from 'lucide-react'
 import { InlineMath, BlockMath } from 'react-katex'
@@ -309,6 +308,7 @@ export default function Component() {
                         width={400}
                         height={200}
                         className="w-full h-48 object-cover"
+                        unoptimized={true}
                       />
                       <div className="p-4">
                         <h3 className="font-bold mb-2">{translate(project.title.en, project.title.zh)}</h3>
