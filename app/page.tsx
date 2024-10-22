@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useRef } from 'react'
-import { Github, MessageCircle, BookOpen, Moon, Sun, Languages, Copy, Search, ChevronDown, X, ChevronLeft, Check, ChevronDownCircle, ChevronRight } from 'lucide-react'
+import { Github, MessageCircle, BookOpen, Moon, Sun, Languages, Copy, Search, ChevronDown, X, ChevronLeft, Check, ChevronRight } from 'lucide-react'
 import { InlineMath, BlockMath } from 'react-katex'
 import 'katex/dist/katex.min.css'
 
