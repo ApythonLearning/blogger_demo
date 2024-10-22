@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useRef } from 'react'
-import { Github, MessageCircle, BookOpen, Moon, Sun, Languages, Copy, Search, ChevronDown, X, ChevronLeft, Check } from 'lucide-react'
+import { Github, MessageCircle, BookOpen, Moon, Sun, Languages, Copy, Search, ChevronDown, X, ChevronLeft, Check, ChevronDownCircle, ChevronRight } from 'lucide-react'
 import { InlineMath, BlockMath } from 'react-katex'
 import 'katex/dist/katex.min.css'
 
@@ -23,7 +23,7 @@ interface Project {
   id: number
   title: { en: string; zh: string }
   description: { en: string; zh: string }
-  image: string
+  images: string[]
 }
 
 interface ContactInfo {
@@ -36,8 +36,8 @@ const blogPosts: BlogPost[] = [
   {
     id: 1,
     title: { en: "Calculation of Mixed Gas Absorption Coefficient", zh: "混合气体吸收系数计算" },
-    tags: ["Physics", "Calculation"],
-    date: "Jul 01, 2024",
+    tags: ["infrare", "gas-absorption"],
+    date: "Oct 21, 2024",
     introduction: {
       en: "Used to calculate the absorption coefficient and transmittance of mixed gases under different working conditions",
       zh: "用于计算不同工况下，混合气体的吸收系数和透过率"
@@ -65,6 +65,28 @@ const blogPosts: BlogPost[] = [
       zh: "注：HAPI默认输出的吸收系数单位是cm^2/molecule。这个单位非常小，需要进行适当的转换。"
     }
   },
+  {
+    id: 2,
+    title: { en: "Modis & Modtran", zh: "Modis & Modtran" },
+    tags: ["infrare", "gas-absorption"],
+    date: "Oct 22, 2024",
+    introduction: {
+      en: "Construction of the Earth's surface and atmosphere using Modis data",
+      zh: "使用Modis数据构建地球表面和大气环境。"
+    },
+    methodology: {
+      en: "Modis and Motran, details please refer to https://www.yuque.com/timelink/bhel1r/ll22vu94tomg9fck?singleDoc# 《Modis&Modtran》",
+      zh: "Modis 和 Motran, 请参考 https://www.yuque.com/timelink/bhel1r/ll22vu94tomg9fck?singleDoc# 《Modis&Modtran》"
+    },
+    equations: [
+    ],
+    variables: [
+    ],
+    note: {
+      en: "Note: Please see https://www.yuque.com/timelink/bhel1r/ll22vu94tomg9fck?singleDoc# 《Modis&Modtran》.",
+      zh: "注：请见 https://www.yuque.com/timelink/bhel1r/ll22vu94tomg9fck?singleDoc# 《Modis&Modtran》。"
+    }
+  },
   // Add other blog posts here...
 ]
 
@@ -73,10 +95,10 @@ const projects: Project[] = [
     id: 1,
     title: { en: 'Infrared simulation and measurement', zh: '红外仿真与测量' },
     description: {
-      en: 'Efficient Infrared Radiation Rapid Calculation Model: This project involves the development of a sophisticated model for calculating infrared radiation. It includes temperature field calculations and radiation calculations, utilizing advanced techniques such as 3D modeling, six-degree-of-freedom trajectory modeling, spatial external heat flow calculations, and transient temperature field calculations. The radiation calculation part involves surface temperature distribution, perspective imaging models, and radiation imaging, incorporating complex concepts like BRDF (Bidirectional Reflectance Distribution Function).',
-      zh: '有效红外辐射快速计算模型：该项目涉及开发一个复杂的红外辐射计算模型。它包括温度场计算和辐射计算，利用了先进的技术，如3D建模、六自由度轨迹建模、空间外热流计算和瞬态温度场计算。辐射计算部分涉及表面温度分布、透视成像模型和辐射成像，并包含了BRDF（双向反射分布函数）等复杂概念。'
+      en: 'Rapid computational modeling of effective infrared radiation: development of a rapid computational modeling of infrared radiation from space targets. The technical tools include: six-degree-of-freedom trajectory modeling, out-of-space heat flow calculation and transient temperature field calculation. The radiation calculation part involves perspective imaging modeling and radiation imaging, and includes BRDF (Bidirectional Reflection Distribution Function.',
+      zh: '有效红外辐射快速计算模型：开发空间目标红外辐射快速计算模型。技术手段包括：六自由度轨迹建模、空间外热流计算和瞬态温度场计算。辐射计算部分涉透视成像模型和辐射成像，并包含了BRDF（双向反射分布函数）。针对仿真结果进行实验测量验证。'
     },
-    image: '/opengl.gif?height=400&width=600'
+    images: ['/opengl.gif?height=400&width=600']
   },
   {
     id: 2,
@@ -85,7 +107,7 @@ const projects: Project[] = [
       en: 'Introduction to this website and how to deploy it',
       zh: '关于此网站的介绍，以及如何部署'
     },
-    image: '/opengl.gif?height=400&width=600'
+    images: ['/opengl.gif?height=400&width=600', '/model.png?height=400&width=600']
   },
   {
     id: 3,
@@ -94,11 +116,11 @@ const projects: Project[] = [
       en: '7 creational patterns out of 24 design patterns (Part 1)',
       zh: '24个设计模式的7个创建型（一）'
     },
-    image: '/opengl.gif?height=400&width=600'
+    images: ['/opengl.gif?height=400&width=600', '/model.png?height=400&width=600']
   },
 ]
 
-const allTags = ["ALL", "codesnap", "Docker", "Java", "npm", "bos", "[]", "aop", "Linux", "tech", "Physics", "Calculation"]
+const allTags = ["ALL", "AI", "Docker", "C++", "npm", "Python", "[]", "Linux", "tech", "infrare", "gas-absorption"]
 
 export default function Component() {
   const [darkMode, setDarkMode] = useState(false)
@@ -112,19 +134,12 @@ export default function Component() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   const toggleDarkMode = () => setDarkMode(!darkMode)
   const toggleLanguage = () => setIsEnglish(!isEnglish)
 
   const translate = (en: string, zh: string) => isEnglish ? en : zh
-
-  // const handleContactHover = (contact) => {
-  //   setHoveredContact(contact);
-  //   if (timeoutRef.current) clearTimeout(timeoutRef.current);
-  //   timeoutRef.current = setTimeout(() => {
-  //     setHoveredContact(null);
-  //   }, 5000);
-  // }
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
@@ -151,6 +166,22 @@ export default function Component() {
       return new Date(b.date).getTime() - new Date(a.date).getTime()
     }
   })
+
+  const nextImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === selectedProject.images.length - 1 ? 0 : prevIndex + 1
+      )
+    }
+  }
+
+  const prevImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? selectedProject.images.length - 1 : prevIndex - 1
+      )
+    }
+  }
 
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
@@ -204,7 +235,7 @@ export default function Component() {
                     {translate('Specialties: infrared simulation, infrared and visible light visual detection, computer vision, artificial intelligence.', '擅长领域：红外仿真、红外和可见光视觉检测、计算机视觉、人工智能。')}
                   </p>
                   <div className="flex space-x-4">
-                    <a href="https://github.com/WQW-G/WQW-G.github.io" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/ApythonLearning" target="_blank" rel="noopener noreferrer">
                       <Github className={`w-6 h-6 ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`} />
                     </a>
                     <a href="https://space.bilibili.com/129430466?spm_id_from=333.975.0.0" target="_blank" rel="noopener noreferrer">
@@ -244,7 +275,7 @@ export default function Component() {
                     <li>{translate('DL Framework: Pytorch, tensorflow', '框架：Pytorch、Tensorflow')}</li>
                     <li>{translate('Lib: OpenCV, OpenGL, CUDA', '库  ：OpenCV、OpenGL、CUDA')}</li>
                     <li>{translate('Software: Fluent, Modtran, Solidworks, Keil', '软件：Fluent、Modtran、Solidworks、Keil')}</li>
-                    <li>{translate('Ops: Ubuntu', '系统：Ubuntu')}</li>
+                    <li>{translate('Ops: Ubuntu, FreeRTOS', '系统：Ubuntu、FreeRTOS')}</li>
                   </ul>
                   <h3 className="text-xl font-bold mb-2">{translate('Contact', '联系方式')}</h3>
                   <ul className="space-y-2">
@@ -300,10 +331,13 @@ export default function Component() {
                     <div
                       key={project.id}
                       className={`${darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-100'} rounded-lg shadow-lg overflow-hidden transition-colors duration-300 cursor-pointer`}
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => {
+                        setSelectedProject(project)
+                        setCurrentImageIndex(0)
+                      }}
                     >
                       <Image
-                        src={project.image}
+                        src={project.images[0]}
                         alt={translate(project.title.en, project.title.zh)}
                         width={400}
                         height={200}
@@ -425,11 +459,10 @@ export default function Component() {
           <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
             <div className="relative">
               <Image
-                src={selectedProject.image}
+                src={selectedProject.images[currentImageIndex]}
                 alt={translate(selectedProject.title.en, selectedProject.title.zh)}
                 width={600}
                 height={400}
-                unoptimized={true}
                 className="w-full h-64 object-cover rounded-t-lg"
               />
               <button
@@ -438,6 +471,37 @@ export default function Component() {
               >
                 <X size={24} />
               </button>
+              {selectedProject.images.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      prevImage()
+                    }}
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 p-1 bg-white rounded-full text-gray-800 hover:bg-gray-200"
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      nextImage()
+                    }}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 bg-white rounded-full text-gray-800 hover:bg-gray-200"
+                  >
+                    <ChevronRight size={24} />
+                  </button>
+                </>
+              )}
+              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {selectedProject.images.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`w-2 h-2 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-gray-400'
+                      }`}
+                  />
+                ))}
+              </div>
             </div>
             <div className="p-6">
               <h3 className="text-2xl font-bold mb-4">{translate(selectedProject.title.en, selectedProject.title.zh)}</h3>
