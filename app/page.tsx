@@ -87,6 +87,42 @@ const blogPosts: BlogPost[] = [
       zh: "注：请见 https://www.yuque.com/timelink/bhel1r/ll22vu94tomg9fck?singleDoc# 《Modis&Modtran》。"
     }
   },
+  {
+    id: 3,
+    title: {
+      en: "Bubble Recognition and Tracking with Image Processing and CNN",
+      zh: "基于图像处理与CNN的气泡识别跟踪"
+    },
+    tags: ["computer-vision", "image-processing", "CNN", "multiphase-flow"],
+    date: "May 26, 2026",
+    description: "YOLO v3-tiny, ITFD and IOU matching for bubble detection and tracking in a plate heat exchanger.",
+    introduction: {
+      en: "This note summarizes a computer-vision pipeline for recognizing and tracking bubbles in a dimple-type plate heat exchanger. The problem is challenging because dense bubbly flow contains small targets, occlusion, bubble rupture, merging and collision. A pure image-processing method is fast but fragile in dense scenes, while a detector-only CNN may miss small bubbles. The combined method uses each technique where it is strongest.",
+      zh: "本文总结一种用于波纹板式换热器气泡识别与跟踪的计算机视觉流程。该问题的难点在于密集两相流中存在小目标、遮挡、气泡破裂、融合和碰撞等动态行为。单纯图像处理速度快但在密集场景下鲁棒性不足，单纯CNN检测器又容易漏检小气泡，因此采用传统视觉与深度学习互补的方案。"
+    },
+    methodology: {
+      en: "The workflow starts from high-speed video frames. YOLO v3-tiny detects normal and abnormal bubbles and outputs bounding boxes. An improved three-frame difference method detects moving small bubbles by combining frame differencing, image enhancement, Otsu thresholding, Canny edges, median filtering and Gaussian-mixture background subtraction. IOU screening removes duplicate ITFD boxes already covered by CNN results and keeps low-overlap boxes as small-bubble supplements. Tracking is then performed by maximum-IOU matching between adjacent frames; rupture and collision events can be inferred from one-to-many and many-to-one matching relationships. Finally, pixel coordinates are converted to physical positions to calculate velocity and dimensionless parameters such as Reynolds, Weber and Froude numbers.",
+      zh: "流程从高速视频帧开始。YOLO v3-tiny用于检测正常气泡和异常气泡，并输出边界框。改进三帧差分法（ITFD）结合帧差、图像增强、Otsu阈值分割、Canny边缘、median滤波和高斯混合背景建模，用于补充运动小气泡检测。随后通过IOU筛选删除已被CNN覆盖的ITFD重复框，保留低重叠框作为小目标补充。跟踪阶段在相邻帧之间采用最大IOU匹配；一对多和多对一匹配关系可用于判断破裂和碰撞事件。最后将像素坐标转换为物理坐标，计算气泡速度以及Reynolds数、Weber数和Froude数等无量纲参数。"
+    },
+    equations: [
+      "IoU = \\frac{Area_{intersection}}{Area_{union}}",
+      "P = \\frac{TP}{TP + FP}",
+      "R = \\frac{TP}{TP + FN}",
+      "F_1 = \\frac{2PR}{P + R}",
+      "v = \\frac{\\Delta s}{\\Delta t}"
+    ],
+    variables: [
+      { symbol: "IoU", description: { en: "Intersection-over-union score between two bounding boxes", zh: "两个边界框的交并比" } },
+      { symbol: "P", description: { en: "Precision of bubble detection", zh: "气泡检测精确率" } },
+      { symbol: "R", description: { en: "Recall of bubble detection", zh: "气泡检测召回率" } },
+      { symbol: "F_1", description: { en: "Harmonic mean of precision and recall", zh: "精确率与召回率的调和平均" } },
+      { symbol: "v", description: { en: "Bubble velocity computed from physical displacement and frame interval", zh: "由物理位移和帧间隔计算得到的气泡速度" } }
+    ],
+    note: {
+      en: "Reference: Wang, Q., Li, X., Xu, C., Yan, T., & Li, Y. (2021). Bubble recognizing and tracking in a plate heat exchanger by using image processing and convolutional neural network. International Journal of Multiphase Flow, 138, 103593. https://doi.org/10.1016/j.ijmultiphaseflow.2021.103593.",
+      zh: "参考文献：Wang, Q., Li, X., Xu, C., Yan, T., & Li, Y. (2021). Bubble recognizing and tracking in a plate heat exchanger by using image processing and convolutional neural network. International Journal of Multiphase Flow, 138, 103593. https://doi.org/10.1016/j.ijmultiphaseflow.2021.103593。"
+    }
+  },
   // Add other blog posts here...
 ]
 
@@ -98,16 +134,16 @@ const projects: Project[] = [
       en: 'Rapid computational modeling of effective infrared radiation: development of a rapid computational modeling of infrared radiation from space targets. The technical tools include: six-degree-of-freedom trajectory modeling, out-of-space heat flow calculation and transient temperature field calculation. The radiation calculation part involves perspective imaging modeling and radiation imaging, and includes BRDF (Bidirectional Reflection Distribution Function.',
       zh: '有效红外辐射快速计算模型：开发空间目标红外辐射快速计算模型。技术手段包括：六自由度轨迹建模、空间外热流计算和瞬态温度场计算。辐射计算部分涉透视成像模型和辐射成像，并包含了BRDF（双向反射分布函数）。针对仿真结果进行实验测量验证。'
     },
-    images: ['/opengl.gif?height=400&width=600']
+    images: ['/project-infrared-simulation.png']
   },
   {
     id: 2,
     title: { en: 'Computer vision', zh: '计算机视觉' },
     description: {
-      en: 'Introduction to this website and how to deploy it',
-      zh: '关于此网站的介绍，以及如何部署'
+      en: 'Bubble recognition and tracking in plate heat exchangers: built a computer-vision pipeline for dense air-water bubbly flow using YOLO v3-tiny, improved three-frame difference (ITFD), IOU screening and adjacent-frame IOU matching. The method detects normal and abnormal bubbles, complements CNN misses on small moving bubbles, tracks rupture, merging and collision events, and converts image coordinates into velocity and dimensionless flow parameters such as Reynolds, Weber and Froude numbers.',
+      zh: '板式换热器气泡识别与跟踪：面向空气-水密集气泡流，构建了结合YOLO v3-tiny、改进三帧差分法（ITFD）、IOU筛选和相邻帧IOU匹配的计算机视觉流程。该方法可识别正常与异常气泡，补充CNN对运动小气泡的漏检，跟踪破裂、融合和碰撞等行为，并将图像坐标转换为速度、Reynolds数、Weber数和Froude数等流动参数。'
     },
-    images: ['/opengl.gif?height=400&width=600', '/model.png?height=400&width=600']
+    images: ['/project-computer-vision.png']
   },
   {
     id: 3,
@@ -116,11 +152,11 @@ const projects: Project[] = [
       en: '7 creational patterns out of 24 design patterns (Part 1)',
       zh: '24个设计模式的7个创建型（一）'
     },
-    images: ['/opengl.gif?height=400&width=600', '/model.png?height=400&width=600']
+    images: ['/project-radiation-transfer.png']
   },
 ]
 
-const allTags = ["ALL", "AI", "Docker", "C++", "npm", "Python", "[]", "Linux", "tech", "infrare", "gas-absorption"]
+const allTags = ["ALL", "AI", "Docker", "C++", "npm", "Python", "[]", "Linux", "tech", "infrare", "gas-absorption", "computer-vision", "image-processing", "CNN", "multiphase-flow"]
 
 export default function Component() {
   const [darkMode, setDarkMode] = useState(false)
@@ -152,7 +188,7 @@ export default function Component() {
     { name: 'Email', url: 'mailto:1062998292@qq.com', display: '1062998292@qq.com' },
     { name: 'GitHub', url: 'https://github.com', display: 'github.com' },
     { name: 'ResearchGate', url: 'https://www.researchgate.net/profile/Qianwen-Wang-15', display: 'ResearchGate.com' },
-    { name: 'Bilibili', url: 'https://space.bilibili.com/129430466?spm_id_from=333.975.0.0', display: 'bilibili.com' },
+    { name: 'Google Scholar', url: 'https://scholar.google.com/citations?user=EH-ZM2YAAAAJ&hl=zh-CN', display: 'Google Scholar' },
   ]
 
   const filteredPosts = blogPosts.filter(post =>
@@ -272,7 +308,7 @@ export default function Component() {
                   <h3 className="text-xl font-bold mb-2">{translate('Skill Set', '技能集')}</h3>
                   <ul className="list-disc list-inside mb-4">
                     <li>{translate('Language: C++, C, Python, Matlab', '语言：C++、C、Python、Matlab')}</li>
-                    <li>{translate('DL Framework: Pytorch, tensorflow', '框架：Pytorch、Tensorflow')}</li>
+                    <li>{translate('DL Framework: Pytorch, tensorflow', 'DL 框架：Pytorch、Tensorflow')}</li>
                     <li>{translate('Lib: OpenCV, OpenGL, CUDA', '库  ：OpenCV、OpenGL、CUDA')}</li>
                     <li>{translate('Software: Fluent, Modtran, Solidworks, Keil', '软件：Fluent、Modtran、Solidworks、Keil')}</li>
                     <li>{translate('Ops: Ubuntu, FreeRTOS', '系统：Ubuntu、FreeRTOS')}</li>
