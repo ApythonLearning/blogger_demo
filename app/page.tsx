@@ -32,6 +32,14 @@ interface ContactInfo {
   display: string
 }
 
+interface FocusItem {
+  id: string
+  title: { en: string; zh: string }
+  detail: { en: string; zh: string }
+  metric: string
+  accent: string
+}
+
 const blogPosts: BlogPost[] = [
   {
     id: 1,
@@ -131,8 +139,8 @@ const projects: Project[] = [
     id: 1,
     title: { en: 'Infrared simulation and measurement', zh: '红外仿真与测量' },
     description: {
-      en: 'Rapid computational modeling of effective infrared radiation: development of a rapid computational modeling of infrared radiation from space targets. The technical tools include: six-degree-of-freedom trajectory modeling, out-of-space heat flow calculation and transient temperature field calculation. The radiation calculation part involves perspective imaging modeling and radiation imaging, and includes BRDF (Bidirectional Reflection Distribution Function.',
-      zh: '有效红外辐射快速计算模型：开发空间目标红外辐射快速计算模型。技术手段包括：六自由度轨迹建模、空间外热流计算和瞬态温度场计算。辐射计算部分涉透视成像模型和辐射成像，并包含了BRDF（双向反射分布函数）。'
+      en: 'Rapid computational modeling of effective infrared radiation: development of a rapid computational modeling of infrared radiation from space targets. The technical tools include: six-degree-of-freedom trajectory modeling, out-of-space heat flow calculation and transient temperature field calculation. The radiation calculation part involves perspective imaging modeling and radiation imaging, and includes BRDF (Bidirectional Reflection Distribution Function.DOI:10.1016/j.applthermaleng.2025.127595',
+      zh: '有效红外辐射快速计算模型：开发空间目标红外辐射快速计算模型。技术手段包括：六自由度轨迹建模、空间外热流计算和瞬态温度场计算。辐射计算部分涉透视成像模型和辐射成像，并包含了BRDF（双向反射分布函数）。DOI:10.1016/j.applthermaleng.2025.127595'
     },
     images: ['/project-infrared-simulation.png']
   },
@@ -140,23 +148,56 @@ const projects: Project[] = [
     id: 2,
     title: { en: 'Computer vision', zh: '计算机视觉' },
     description: {
-      en: 'Bubble recognition and tracking in plate heat exchangers: built a computer-vision pipeline for dense air-water bubbly flow using YOLO v3-tiny, improved three-frame difference (ITFD), IOU screening and adjacent-frame IOU matching. The method detects normal and abnormal bubbles, complements CNN misses on small moving bubbles, tracks rupture, merging and collision events, and converts image coordinates into velocity and dimensionless flow parameters such as Reynolds, Weber and Froude numbers.',
-      zh: '板式换热器气泡识别与跟踪：面向空气-水密集气泡流，构建了结合YOLO v3-tiny、改进三帧差分法（ITFD）、IOU筛选和相邻帧IOU匹配的计算机视觉流程。该方法可识别正常与异常气泡，补充CNN对运动小气泡的漏检，跟踪破裂、融合和碰撞等行为，并将图像坐标转换为速度、Reynolds数、Weber数和Froude数等流动参数。'
+      en: 'Bubble recognition and tracking in plate heat exchangers: built a computer-vision pipeline for dense air-water bubbly flow using YOLO v3-tiny, improved three-frame difference (ITFD), IOU screening and adjacent-frame IOU matching. The method detects normal and abnormal bubbles, complements CNN misses on small moving bubbles, tracks rupture, merging and collision events, and converts image coordinates into velocity and dimensionless flow parameters such as Reynolds, Weber and Froude numbers.10.1016/j.ijmultiphaseflow.2021.103593',
+      zh: '板式换热器气泡识别与跟踪：面向空气-水密集气泡流，构建了结合YOLO v3-tiny、改进三帧差分法（ITFD）、IOU筛选和相邻帧IOU匹配的计算机视觉流程。该方法可识别正常与异常气泡，补充CNN对运动小气泡的漏检，跟踪破裂、融合和碰撞等行为，并将图像坐标转换为速度、Reynolds数、Weber数和Froude数等流动参数。10.1016/j.ijmultiphaseflow.2021.103593'
     },
     images: ['/project-computer-vision.png']
   },
   {
     id: 3,
-    title: { en: 'Radiation transfer', zh: '辐射传输' },
+    title: { en: 'Radiative transfer', zh: '辐射传输' },
     description: {
-      en: 'Atmospheric radiation transfer modeling: developed an atmospheric radiation transfer model based on the discrete ordinate method (DOM) that can simulate the infrared radiation transfer process under different atmospheric conditions. The model considers physical processes such as absorption, scattering and emission, and its accuracy and efficiency are validated by comparison with mature tools such as MODTRAN.',
-      zh: '大气辐射传输建模：基于离散纵标法（DOM）开发了大气辐射传输模型，能够模拟不同大气条件下的红外辐射传输过程。该模型考虑了吸收、散射和发射等物理过程，并通过与MODTRAN等成熟工具的对比验证了其准确性和效率。'
+      en: 'Atmospheric radiation transfer modeling: developed an atmospheric radiation transfer model based on the discrete ordinate method (DOM) that can simulate the infrared radiation transfer process under different atmospheric conditions. The model considers physical processes such as absorption, scattering and emission, and its accuracy and efficiency are validated by comparison with mature tools such as MODTRAN.https://www.sciencedirect.com/science/article/pii/S0022407325003553',
+      zh: '大气辐射传输建模：基于离散纵标法（DOM）开发了大气辐射传输模型，能够模拟不同大气条件下的红外辐射传输过程。该模型考虑了吸收、散射和发射等物理过程，并通过与MODTRAN等成熟工具的对比验证了其准确性和效率。https://www.sciencedirect.com/science/article/pii/S0022407325003553'
     },
     images: ['/project-radiation-transfer.png']
   },
 ]
 
 const allTags = ["ALL", "AI", "Docker", "C++", "npm", "Python", "[]", "Linux", "tech", "infrare", "gas-absorption", "computer-vision", "image-processing", "CNN", "multiphase-flow"]
+
+const focusItems: FocusItem[] = [
+  {
+    id: "ir",
+    title: { en: "Infrared Simulation", zh: "红外仿真" },
+    detail: {
+      en: "Fast target radiation modeling with trajectory, heat flux, temperature field and BRDF-aware imaging.",
+      zh: "结合轨迹、外热流、瞬态温度场和BRDF成像的目标红外辐射快速建模。"
+    },
+    metric: "BRDF + thermal field",
+    accent: "from-orange-400 to-red-500"
+  },
+  {
+    id: "vision",
+    title: { en: "Computer Vision", zh: "计算机视觉" },
+    detail: {
+      en: "Object detection and tracking pipelines for dense bubbles, small targets and dynamic flow events.",
+      zh: "面向密集气泡、小目标和动态流动事件的检测与跟踪流程。"
+    },
+    metric: "YOLO + IOU tracking",
+    accent: "from-cyan-400 to-blue-500"
+  },
+  {
+    id: "transfer",
+    title: { en: "Radiative Transfer", zh: "辐射传输" },
+    detail: {
+      en: "Atmospheric radiation transfer modeling with absorption, scattering, emission and MODTRAN validation.",
+      zh: "考虑吸收、散射、发射并与MODTRAN验证的大气辐射传输建模。"
+    },
+    metric: "DOM + atmosphere",
+    accent: "from-violet-400 to-fuchsia-500"
+  }
+]
 
 export default function Component() {
   const [darkMode, setDarkMode] = useState(false)
@@ -171,11 +212,13 @@ export default function Component() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [activeFocusId, setActiveFocusId] = useState(focusItems[0].id)
 
   const toggleDarkMode = () => setDarkMode(!darkMode)
   const toggleLanguage = () => setIsEnglish(!isEnglish)
 
   const translate = (en: string, zh: string) => isEnglish ? en : zh
+  const activeFocus = focusItems.find((item) => item.id === activeFocusId) ?? focusItems[0]
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
@@ -220,9 +263,13 @@ export default function Component() {
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
+    <div className={`relative min-h-screen overflow-hidden ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className={`aurora-orb absolute -top-24 right-[-8rem] h-72 w-72 rounded-full blur-3xl ${darkMode ? 'bg-violet-700/20' : 'bg-violet-300/30'}`} />
+        <div className={`aurora-orb absolute left-[-10rem] top-1/3 h-80 w-80 rounded-full blur-3xl [animation-delay:-4s] ${darkMode ? 'bg-cyan-700/10' : 'bg-cyan-200/35'}`} />
+      </div>
       <header className={`sticky top-0 z-10 flex items-center justify-between p-4 ${darkMode ? 'border-gray-700 bg-gray-900/80' : 'border-gray-200 bg-white/80'} border-b transition-colors duration-300 backdrop-blur-sm`}>
-        <Image src="/seu.svg" alt="Logo" width={40} height={40} className="rounded-lg" />
+        <Image src="/seu.svg" alt="Logo" width={40} height={40} className="float-soft rounded-lg" />
         <nav className="hidden md:flex space-x-4">
           {[
             { en: 'Home', zh: '首页', page: 'home' },
@@ -230,7 +277,7 @@ export default function Component() {
           ].map((item) => (
             <button
               key={item.page}
-              className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} ${currentPage === item.page ? 'font-bold' : ''}`}
+              className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} ${currentPage === item.page ? 'font-bold' : ''} rounded-full px-2 py-1 transition-all duration-200 hover:-translate-y-0.5 hover:bg-violet-500/10`}
               onClick={() => {
                 setCurrentPage(item.page)
                 setSelectedBlogPost(null)
@@ -254,12 +301,12 @@ export default function Component() {
       <main className="container mx-auto px-4 py-8">
         {currentPage === 'home' && !selectedBlogPost && (
           <>
-            <section className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg p-8 mb-8`}>
+            <section className={`${darkMode ? 'bg-gray-800' : 'bg-white'} interactive-card fade-up rounded-lg shadow-lg p-8 mb-8`}>
               <div className="flex flex-col md:flex-row items-center justify-between">
                 <div className="mb-4 md:mb-0 md:mr-8">
                   <h1 className="text-4xl font-bold mb-2">{translate('Hello! Welcome to my home page!', '你好！欢迎来到我的个人主页！')}</h1>
                   <h2 className="text-3xl font-bold mb-4">
-                    {translate("I'm ", '我是 ')}<span className="text-violet-600">WQW</span>
+                    {translate("I'm ", '我是 ')}<span className="text-violet-600">QIANWEN WANG</span>
                   </h2>
                   <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
                     {translate(
@@ -271,23 +318,23 @@ export default function Component() {
                     {translate('Specialties: infrared simulation, infrared and visible light visual detection, computer vision, artificial intelligence.', '擅长领域：红外仿真、红外和可见光视觉检测、计算机视觉、人工智能。')}
                   </p>
                   <div className="flex space-x-4">
-                    <a href="https://github.com/ApythonLearning" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/ApythonLearning" target="_blank" rel="noopener noreferrer" className="transition-transform duration-200 hover:-translate-y-1">
                       <Github className={`w-6 h-6 ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`} />
                     </a>
-                    <a href="https://space.bilibili.com/129430466?spm_id_from=333.975.0.0" target="_blank" rel="noopener noreferrer">
+                    <a href="https://space.bilibili.com/129430466?spm_id_from=333.975.0.0" target="_blank" rel="noopener noreferrer" className="transition-transform duration-200 hover:-translate-y-1">
                       <MessageCircle className={`w-6 h-6 ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`} />
                     </a>
-                    <button onClick={() => setCurrentPage('blog')}>
+                    <button onClick={() => setCurrentPage('blog')} className="transition-transform duration-200 hover:-translate-y-1">
                       <BookOpen className={`w-6 h-6 ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`} />
                     </button>
                   </div>
                 </div>
                 <Image
-                  src="/seu.svg"
+                  src="/MyPhoto.jpg"
                   alt={translate('Profile', '个人头像')}
-                  width={200}
-                  height={200}
-                  className="rounded-full"
+                  width={280}
+                  height={300}
+                  className="float-soft rounded-full shadow-2xl ring-4 ring-violet-500/10"
                 />
               </div>
             </section>
@@ -296,19 +343,23 @@ export default function Component() {
                 <h2 className="text-2xl font-bold mb-4 text-violet-600">
                   {translate('About Me', '关于我')}
                 </h2>
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} relative min-h-[540px] rounded-lg shadow-lg overflow-hidden`}>
-                  <Image
-                    src="/about-wallpaper.png"
-                    alt={translate('Abstract light wallpaper', '浅色抽象壁纸')}
-                    fill
-                    sizes="(min-width: 1024px) 100vw, 100vw"
-                    className="object-cover object-center"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-white via-white/90 to-white/55 dark:from-gray-800 dark:via-gray-800/90 dark:to-gray-800/65 lg:bg-gradient-to-r lg:from-white lg:via-white/80 lg:to-white/10 lg:dark:from-gray-800 lg:dark:via-gray-800/80 lg:dark:to-gray-800/20" />
-                  <div className="relative z-10 p-6 lg:max-w-2xl">
+                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white min-h-[540px]'} interactive-card fade-up relative rounded-lg shadow-lg overflow-hidden`}>
+                  {!darkMode && (
+                    <>
+                      <Image
+                        src="/about-wallpaper.png"
+                        alt={translate('Abstract light wallpaper', '浅色抽象壁纸')}
+                        fill
+                        sizes="(min-width: 1024px) 100vw, 100vw"
+                        className="object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-b from-white via-white/90 to-white/55 lg:bg-gradient-to-r lg:from-white lg:via-white/80 lg:to-white/10" />
+                    </>
+                  )}
+                  <div className={`${darkMode ? 'text-gray-100' : 'text-gray-900'} relative z-10 p-6 lg:max-w-2xl`}>
                     <h3 className="text-xl font-bold mb-2">{translate('Who am I', '我是谁')}</h3>
                     <p className="mb-4">
-                      {translate("Hello! I'm WQW. Feel free to reach out and connect!", "你好！我是WQW。欢迎随时联系我！")}
+                      {translate("Hello! I'm QIANWEN WANG. Feel free to reach out and connect!", "你好！我是汪迁文。欢迎随时联系我！")}
                     </p>
                     <h3 className="text-xl font-bold mb-2">{translate('What I do', '我做什么')}</h3>
                     <p className="mb-4">
@@ -366,6 +417,58 @@ export default function Component() {
                       ))}
                     </ul>
                   </div>
+                  <div className="relative z-10 mx-6 mb-6 lg:absolute lg:right-6 lg:top-6 lg:mx-0 lg:mb-0 lg:w-[23rem]">
+                    <div className={`${darkMode ? 'border-gray-700 bg-gray-900/70 text-gray-100' : 'border-white/70 bg-white/55 text-gray-900'} rounded-lg border p-4 shadow-xl backdrop-blur-md`}>
+                      <div className="mb-4 flex items-center justify-between">
+                        <div>
+                          <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} text-xs uppercase tracking-[0.22em]`}>
+                            {translate('Interactive Map', '交互地图')}
+                          </p>
+                          <h3 className="text-lg font-bold">{translate('Research Focus', '研究方向')}</h3>
+                        </div>
+                        <div className="relative h-10 w-10">
+                          <span className={`pulse-ring absolute inset-0 rounded-full bg-gradient-to-br ${activeFocus.accent} opacity-40`} />
+                          <span className={`absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br ${activeFocus.accent}`} />
+                        </div>
+                      </div>
+
+                      <div className="grid gap-2">
+                        {focusItems.map((item) => {
+                          const isActive = item.id === activeFocus.id
+
+                          return (
+                            <button
+                              key={item.id}
+                              type="button"
+                              onClick={() => setActiveFocusId(item.id)}
+                              onMouseEnter={() => setActiveFocusId(item.id)}
+                              className={`${isActive
+                                ? darkMode
+                                  ? 'bg-white/12 text-white'
+                                  : 'bg-white/80 text-gray-950'
+                                : darkMode
+                                  ? 'bg-white/5 text-gray-300 hover:bg-white/10'
+                                  : 'bg-white/35 text-gray-700 hover:bg-white/65'
+                                } flex items-center justify-between rounded-md px-3 py-2 text-left transition-all duration-200 hover:-translate-y-0.5`}
+                            >
+                              <span className="font-medium">{translate(item.title.en, item.title.zh)}</span>
+                              <span className={`h-2.5 w-2.5 rounded-full bg-gradient-to-br ${item.accent}`} />
+                            </button>
+                          )
+                        })}
+                      </div>
+
+                      <div className={`${darkMode ? 'border-gray-700 bg-gray-950/45' : 'border-white/70 bg-white/50'} mt-4 rounded-md border p-3`}>
+                        <p className="text-sm font-semibold">{translate(activeFocus.title.en, activeFocus.title.zh)}</p>
+                        <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mt-2 text-sm leading-6`}>
+                          {translate(activeFocus.detail.en, activeFocus.detail.zh)}
+                        </p>
+                        <div className={`${darkMode ? 'text-violet-200' : 'text-violet-700'} mt-3 inline-flex rounded-full bg-violet-500/10 px-3 py-1 text-xs font-semibold`}>
+                          {activeFocus.metric}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="w-full">
@@ -376,7 +479,7 @@ export default function Component() {
                   {projects.map((project) => (
                     <div
                       key={project.id}
-                      className={`${darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-100'} rounded-lg shadow-lg overflow-hidden transition-colors duration-300 cursor-pointer`}
+                      className={`${darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-100'} interactive-card rounded-lg shadow-lg overflow-hidden cursor-pointer`}
                       onClick={() => {
                         setSelectedProject(project)
                         setCurrentImageIndex(0)
@@ -387,7 +490,7 @@ export default function Component() {
                         alt={translate(project.title.en, project.title.zh)}
                         width={400}
                         height={200}
-                        className="w-full h-48 object-cover"
+                        className="image-zoom w-full h-48 object-cover"
                         unoptimized={true}
                       />
                       <div className="p-4">
@@ -449,7 +552,7 @@ export default function Component() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts.map(post => (
-                <div key={post.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer" onClick={() => setSelectedBlogPost(post)}>
+                <div key={post.id} className={`${darkMode ? 'border-gray-700 bg-gray-800/80 hover:bg-gray-700/80' : 'bg-white hover:bg-gray-50'} interactive-card rounded-lg border p-4 cursor-pointer`} onClick={() => setSelectedBlogPost(post)}>
                   <h2 className="text-xl font-semibold mb-2">{translate(post.title.en, post.title.zh)}</h2>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {post.tags.map(tag => (
@@ -502,7 +605,7 @@ export default function Component() {
       </main>
       {selectedProject && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
+          <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} scale-in rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto`}>
             <div className="relative">
               <Image
                 src={selectedProject.images[currentImageIndex]}
