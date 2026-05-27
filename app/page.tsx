@@ -132,7 +132,7 @@ const projects: Project[] = [
     title: { en: 'Infrared simulation and measurement', zh: '红外仿真与测量' },
     description: {
       en: 'Rapid computational modeling of effective infrared radiation: development of a rapid computational modeling of infrared radiation from space targets. The technical tools include: six-degree-of-freedom trajectory modeling, out-of-space heat flow calculation and transient temperature field calculation. The radiation calculation part involves perspective imaging modeling and radiation imaging, and includes BRDF (Bidirectional Reflection Distribution Function.',
-      zh: '有效红外辐射快速计算模型：开发空间目标红外辐射快速计算模型。技术手段包括：六自由度轨迹建模、空间外热流计算和瞬态温度场计算。辐射计算部分涉透视成像模型和辐射成像，并包含了BRDF（双向反射分布函数）。针对仿真结果进行实验测量验证。'
+      zh: '有效红外辐射快速计算模型：开发空间目标红外辐射快速计算模型。技术手段包括：六自由度轨迹建模、空间外热流计算和瞬态温度场计算。辐射计算部分涉透视成像模型和辐射成像，并包含了BRDF（双向反射分布函数）。'
     },
     images: ['/project-infrared-simulation.png']
   },
@@ -149,8 +149,8 @@ const projects: Project[] = [
     id: 3,
     title: { en: 'Radiation transfer', zh: '辐射传输' },
     description: {
-      en: '7 creational patterns out of 24 design patterns (Part 1)',
-      zh: '24个设计模式的7个创建型（一）'
+      en: 'Atmospheric radiation transfer modeling: developed an atmospheric radiation transfer model based on the discrete ordinate method (DOM) that can simulate the infrared radiation transfer process under different atmospheric conditions. The model considers physical processes such as absorption, scattering and emission, and its accuracy and efficiency are validated by comparison with mature tools such as MODTRAN.',
+      zh: '大气辐射传输建模：基于离散纵标法（DOM）开发了大气辐射传输模型，能够模拟不同大气条件下的红外辐射传输过程。该模型考虑了吸收、散射和发射等物理过程，并通过与MODTRAN等成熟工具的对比验证了其准确性和效率。'
     },
     images: ['/project-radiation-transfer.png']
   },
@@ -296,66 +296,76 @@ export default function Component() {
                 <h2 className="text-2xl font-bold mb-4 text-violet-600">
                   {translate('About Me', '关于我')}
                 </h2>
-                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg p-6`}>
-                  <h3 className="text-xl font-bold mb-2">{translate('Who am I', '我是谁')}</h3>
-                  <p className="mb-4">
-                    {translate("Hello! I'm WQW. Feel free to reach out and connect!", "你好！我是WQW。欢迎随时联系我！")}
-                  </p>
-                  <h3 className="text-xl font-bold mb-2">{translate('What I do', '我做什么')}</h3>
-                  <p className="mb-4">
-                    {translate("I'm currently a PhD  student.", "我目前是一名博士研究生。")}
-                  </p>
-                  <h3 className="text-xl font-bold mb-2">{translate('Skill Set', '技能集')}</h3>
-                  <ul className="list-disc list-inside mb-4">
-                    <li>{translate('Language: C++, C, Python, Matlab', '语言：C++、C、Python、Matlab')}</li>
-                    <li>{translate('DL Framework: Pytorch, tensorflow', 'DL 框架：Pytorch、Tensorflow')}</li>
-                    <li>{translate('Lib: OpenCV, OpenGL, CUDA', '库  ：OpenCV、OpenGL、CUDA')}</li>
-                    <li>{translate('Software: Fluent, Modtran, Solidworks, Keil', '软件：Fluent、Modtran、Solidworks、Keil')}</li>
-                    <li>{translate('Ops: Ubuntu, FreeRTOS', '系统：Ubuntu、FreeRTOS')}</li>
-                  </ul>
-                  <h3 className="text-xl font-bold mb-2">{translate('Contact', '联系方式')}</h3>
-                  <ul className="space-y-2">
-                    {contactInfo.map((contact) => (
-                      <li
-                        key={contact.name}
-                        className="group relative"
-                        // onMouseEnter={() => handleContactHover(contact)}
-                        onMouseLeave={() => setHoveredContact(null)}
-                      >
-                        <a
-                          href={contact.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-violet-600 hover:text-violet-800 transition-colors duration-300 group-hover:text-lg"
+                <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} relative min-h-[540px] rounded-lg shadow-lg overflow-hidden`}>
+                  <Image
+                    src="/about-wallpaper.png"
+                    alt={translate('Abstract light wallpaper', '浅色抽象壁纸')}
+                    fill
+                    sizes="(min-width: 1024px) 100vw, 100vw"
+                    className="object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-white via-white/90 to-white/55 dark:from-gray-800 dark:via-gray-800/90 dark:to-gray-800/65 lg:bg-gradient-to-r lg:from-white lg:via-white/80 lg:to-white/10 lg:dark:from-gray-800 lg:dark:via-gray-800/80 lg:dark:to-gray-800/20" />
+                  <div className="relative z-10 p-6 lg:max-w-2xl">
+                    <h3 className="text-xl font-bold mb-2">{translate('Who am I', '我是谁')}</h3>
+                    <p className="mb-4">
+                      {translate("Hello! I'm WQW. Feel free to reach out and connect!", "你好！我是WQW。欢迎随时联系我！")}
+                    </p>
+                    <h3 className="text-xl font-bold mb-2">{translate('What I do', '我做什么')}</h3>
+                    <p className="mb-4">
+                      {translate("I'm currently a PhD  student.", "我目前是一名博士研究生。")}
+                    </p>
+                    <h3 className="text-xl font-bold mb-2">{translate('Skill Set', '技能集')}</h3>
+                    <ul className="list-disc list-inside mb-4">
+                      <li>{translate('Language: C++, C, Python, Matlab，etc.', '语言：C++、C、Python、Matlab、等')}</li>
+                      <li>{translate('DL Framework: Pytorch, tensorflow，etc.', 'DL 框架：Pytorch、Tensorflow、等')}</li>
+                      <li>{translate('Lib: OpenCV, OpenGL, CUDA', '库  ：OpenCV、OpenGL、CUDA')}</li>
+                      <li>{translate('Software: Fluent, Modtran, Solidworks, Keil，etc.', '软件：Fluent、Modtran、Solidworks、Keil、等')}</li>
+                      <li>{translate('System: Ubuntu, FreeRTOS (Embeded)', '系统：Ubuntu、FreeRTOS(嵌入式)')}</li>
+                    </ul>
+                    <h3 className="text-xl font-bold mb-2">{translate('Contact', '联系方式')}</h3>
+                    <ul className="space-y-2">
+                      {contactInfo.map((contact) => (
+                        <li
+                          key={contact.name}
+                          className="group relative"
+                          // onMouseEnter={() => handleContactHover(contact)}
+                          onMouseLeave={() => setHoveredContact(null)}
                         >
-                          {contact.display}
-                        </a>
-                        <button
-                          onClick={() => copyToClipboard(contact.url)}
-                          className="ml-2 p-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 opacity-0 group-hover:opacity-100"
-                          aria-label={`Copy ${contact.name} contact information`}
-                        >
-                          {copiedContact === contact.url ? (
-                            <Check className="w-4 h-4 text-green-500" />
-                          ) : (
-                            <Copy className="w-4 h-4" />
+                          <a
+                            href={contact.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-violet-600 hover:text-violet-800 transition-colors duration-300 group-hover:text-lg"
+                          >
+                            {contact.display}
+                          </a>
+                          <button
+                            onClick={() => copyToClipboard(contact.url)}
+                            className="ml-2 p-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 opacity-0 group-hover:opacity-100"
+                            aria-label={`Copy ${contact.name} contact information`}
+                          >
+                            {copiedContact === contact.url ? (
+                              <Check className="w-4 h-4 text-green-500" />
+                            ) : (
+                              <Copy className="w-4 h-4" />
+                            )}
+                          </button>
+                          {hoveredContact === contact && (
+                            <div className="absolute left-0 mt-2 p-2 bg-white dark:bg-gray-800 rounded shadow-lg z-10 flex items-center space-x-2">
+                              <a
+                                // href={contact.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
+                              >
+                                {/* {contact.url} */}
+                              </a>
+                            </div>
                           )}
-                        </button>
-                        {hoveredContact === contact && (
-                          <div className="absolute left-0 mt-2 p-2 bg-white dark:bg-gray-800 rounded shadow-lg z-10 flex items-center space-x-2">
-                            <a
-                              // href={contact.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
-                            >
-                              {/* {contact.url} */}
-                            </a>
-                          </div>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
               <div className="w-full">
